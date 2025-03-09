@@ -1,0 +1,17 @@
+{
+  "users": {
+    "379689141765406721": {
+      "balance": 0,
+      "level": 1,
+      "experience": 0,
+      "inventory": [],
+      "data": {
+        "jobs": {
+          "currentJob": null,
+          "xp": 0,
+          "cooldown": 0
+        }
+      }
+    }
+  }
+}
