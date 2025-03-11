@@ -26,15 +26,25 @@ class CommandBuilder extends SlashCommandBuilder {
   }
 
   hasAccess(interaction) {
-    return CommandBuilder.#checkAccess(interaction, this._permissions);
+    return this.#checkAccess(interaction);
   }
 
-  static #checkAccess(interaction, { roles, users, discordPerms }) {
-    if (users.includes(interaction.user.id)) return true;
-    if (discordPerms.some(p => !interaction.member.permissions.has(p))) return false;
-    if (roles.some(r => interaction.member.roles.cache.has(r))) return true;
-    return false;
-  }
+  #checkAccess(interaction) {
+    const { roles, users, discordPerms } = this._permissions;
+
+    // If the command has specific users allowed, only they should be able to use it.
+    if (users.length > 0 && !users.includes(interaction.user.id)) return false;
+
+    // If there are required Discord permissions, check them.
+    if (discordPerms.length > 0 && !interaction.member.permissions.has(discordPerms)) return false;
+
+    // If roles are required, check if the user has at least one of them.
+    if (roles.length > 0 && interaction.member.roles.cache.some(role => roles.includes(role.id))) return true;
+
+    // Allow if no restrictions are set (default behavior)
+    return users.length === 0 && roles.length === 0 && discordPerms.length === 0;
+}
+
 }
 
 const PERMISSIONS = {
