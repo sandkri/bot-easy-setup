@@ -14,7 +14,6 @@ export default {
     )
     .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageChannels),
     
-    
   async execute(interaction) {
     const data = readJSON('servers.json');
     console.log(data);
