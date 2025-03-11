@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { writeJSON, readJSON } from '../../utilities/helpers/file.js';
+import { writeJSON, readJSON } from '../../utility/helpers/file.js';
 
 export default {
   data: new SlashCommandBuilder()
