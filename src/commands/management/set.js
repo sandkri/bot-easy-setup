@@ -1,6 +1,6 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { PermissionsBitField, SlashCommandBuilder } from 'discord.js';
 import { writeJSON, readJSON } from '../../utility/helpers/file.js';
-import { CommandBuilder } from '../../utility/commandBuilder.js';
+import { CommandBuilder, PERMISSIONS } from '../../utility/commandBuilder.js';
 
 export default {
   data: new CommandBuilder()
@@ -11,7 +11,8 @@ export default {
         .setName('welcome')
         .setDescription('Set the welcome channel')
         .addChannelOption(option => option.setName('channel').setDescription('The channel to set as the welcome channel').setRequired(true))
-    ),
+    )
+    .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageChannels),
     
   async execute(interaction) {
     const data = readJSON('servers.json');
