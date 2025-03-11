@@ -15,6 +15,7 @@ export default {
         .setTitle('Reaxion | Warning')
         .setDescription('You do not have permission to use this command.')
         .setColor(Colors.Yellow)
+        
       return await interaction.reply({embeds: [embed] });
     }
 
