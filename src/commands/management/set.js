@@ -13,7 +13,7 @@ export default {
         .addChannelOption(option => option.setName('channel').setDescription('The channel to set as the welcome channel').setRequired(true))
     )
     .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageChannels),
-    
+
   async execute(interaction) {
     const data = readJSON('servers.json');
     console.log(data);

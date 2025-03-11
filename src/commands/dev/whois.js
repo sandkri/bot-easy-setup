@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from 'discord.js';
+import { PermissionsBitField, SlashCommandBuilder } from 'discord.js';
 
 export default {
   data: new SlashCommandBuilder()
@@ -8,7 +8,8 @@ export default {
       option.setName('target')
         .setDescription('Select a user')
         .setRequired(false)
-    ),
+    ).setDefaultMemberPermissions(PermissionsBitField.Flags.ManageChannels)
+    ,
   async execute(interaction) {
     const user = interaction.options.getUser('target') || interaction.user;
     const member = await interaction.guild.members.fetch(user.id);
