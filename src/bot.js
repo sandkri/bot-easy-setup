@@ -11,7 +11,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const client = new Client({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
+  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers],
 });
 
 client.commands = new Collection();
@@ -20,16 +20,18 @@ const commandsPath = path.join(__dirname, 'commands');
 
 for (const category of readdirSync(commandsPath)) {
   const categoryPath = path.join(commandsPath, category);
-  for (const file of readdirSync(categoryPath).filter((f) => f.endsWith('.js'))) {
+
+  for (const file of readdirSync(categoryPath).filter((f) => ['.js', '.ts'].some(ext => f.endsWith(ext)))) {
     const filePath = pathToFileURL(path.join(categoryPath, file)).href;
-    const command = await import(filePath);
+    
+    const command = await import(filePath); 
+
     if (command.default?.data && command.default?.execute) {
       client.commands.set(command.default.data.name, command.default);
       commands.push(command.default.data.toJSON());
     }
   }
 }
-
 const rest = new REST({ version: '10' }).setToken(process.env.BOT_TOKEN);
 
 (async () => {

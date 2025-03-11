@@ -18,7 +18,12 @@ export default {
     const subcommand = interaction.options.getSubcommand();
     if (subcommand === 'welcome') {
       const channel = interaction.options.getChannel('channel');
+      const guildId = interaction.guild.id;
 
+      data[guildId] = { set: { welcome: { channel: channel.id } } };
+      writeJSON('servers.json', data);
+
+      console.log(guildId);
       await interaction.reply(`Welcome channel set to ${channel}`);
       return;
     }
